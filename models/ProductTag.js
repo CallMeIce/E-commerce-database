@@ -2,12 +2,41 @@ const { Model, DataTypes } = require('sequelize');
 
 const sequelize = require('../config/connection');
 
-class ProductTag extends Model {}
+class ProductTag extends Model { }
 
 ProductTag.init(
   {
     // define columns
-    
+    // driver_id: {
+    //   type: DataTypes.INTEGER,
+    //   references: {
+    //     // This references the `driver` model, which we set in `Driver.js` as its `modelName` property
+    //     model: 'driver',
+    //     key: 'id',
+    //   },
+    // },
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    driver_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        // This references the `driver` model, which we set in `Driver.js` as its `modelName` property
+        model: 'product',
+        key: 'id',
+      },
+    },
+    tag_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        // This references the `driver` model, which we set in `Driver.js` as its `modelName` property
+        model: 'tag',
+        key: 'id',
+      },
+    },
   },
   {
     sequelize,
@@ -19,35 +48,6 @@ ProductTag.init(
 );
 
 module.exports = ProductTag;
-
-
-// ProductTag
-
-
-// id
-
-
-// Integer.
-
-
-// Doesn't allow null values.
-
-
-// Set as primary key.
-
-
-// Uses auto increment.
-
-
-
-
-// product_id
-
-
-// Integer.
-
-
-// References the Product model's id.
 
 
 
