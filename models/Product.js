@@ -1,5 +1,5 @@
 // import important parts of sequelize library
-const { Model, DataTypes } = require('sequelize');
+const { Model, DataTypes, DECIMAL, NUMBER } = require('sequelize');
 // import our database connection from config.js
 const sequelize = require('../config/connection');
 
@@ -10,6 +10,41 @@ class Product extends Model {}
 Product.init(
   {
     // define columns
+    // email: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false,
+    //   unique: true,
+    //   validate: {
+    //     isEmail: true,
+  
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    product_name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    price: {
+      type:DataTypes.DECIMAL,
+      allowNull: false,
+      validate: DECIMAL,
+    },
+    stock: {
+      type:DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 10,
+      validate: NUMBER,
+    },
+    category_id: {
+      type:DataTypes.INTEGER,
+      allowNull: false,
+      validate: DECIMAL,
+      //TODO References the Category model's id.
+    },
+
   },
   {
     sequelize,
@@ -21,80 +56,3 @@ Product.init(
 );
 
 module.exports = Product;
-
-
-// Product
-
-
-// id
-
-
-// Integer.
-
-
-// Doesn't allow null values.
-
-
-// Set as primary key.
-
-
-// Uses auto increment.
-
-
-
-
-// product_name
-
-
-// String.
-
-
-// Doesn't allow null values.
-
-
-
-
-// price
-
-
-// Decimal.
-
-
-// Doesn't allow null values.
-
-
-// Validates that the value is a decimal.
-
-
-
-
-// stock
-
-
-// Integer.
-
-
-// Doesn't allow null values.
-
-
-// Set a default value of 10.
-
-
-// Validates that the value is numeric.
-
-
-
-
-// category_id
-
-
-// Integer.
-
-
-// References the Category model's id.
-
-
-
-
-
-

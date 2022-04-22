@@ -16,47 +16,17 @@ Category.init(
     category_name: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
-    {
+    }
+  },
+  {
     sequelize,
-      timestamps: false,
-      freezeTableName: true,
-      underscored: true,
-      modelName: 'category',
-  }});
+    timestamps: false,
+    freezeTableName: true,
+    underscored: true,
+    modelName: 'category',
+  });
 
 module.exports = Category;
-
-
-// Category
-
-
-// id
-
-
-// Integer.
-
-
-// Doesn't allow null values.
-
-
-// Set as primary key.
-
-
-// Uses auto increment.
-
-
-
-
-// category_name
-
-
-// String.
-
-
-// Doesn't allow null values.
-
-
 
 // Driver.init(
 //   {
