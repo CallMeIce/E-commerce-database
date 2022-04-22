@@ -42,9 +42,11 @@ Product.init(
       type:DataTypes.INTEGER,
       allowNull: false,
       validate: DECIMAL,
-      //TODO References the Category model's id.
-    },
-
+      references: {
+        model: "category",
+        key: "id"
+      }
+    }
   },
   {
     sequelize,
