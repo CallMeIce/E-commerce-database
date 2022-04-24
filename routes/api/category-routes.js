@@ -3,37 +3,87 @@ const { Category, Product } = require('../../models');
 
 // The `/api/categories` endpoint
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   // find all categories
   // be sure to include its associated Products
+  try {
+    const categoryData = await Category.findAll({
+      include: [{ model: Product }]
+    });
+    res.status(200).json(categoryData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
-router.get('/:id', (req, res) => {
-  // find one category by its `id` value
-  // be sure to include its associated Products
+
+// find one category by its `id` value
+// be sure to include its associated Products
+router.get('/:id', async (req, res) => {
+  try {
+    const categoryData = await Category.findByPk(req.params.id);
+    if (!categoryData) {
+      res.status(404).json({ message: 'No category with this id!' });
+      return;
+    }
+    res.status(200).json(categoryData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+
 });
 
-router.post('/', (req, res) => {
-  // create a new category
+
+// create a new category\
+router.post('/', async (req, res) => {
+  try {
+    const categoryData = await Category.create({
+      category_name: req.body.category_name,
+    });
+    res.status(200).json(categoryData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
-router.put('/:id', (req, res) => {
-  // update a category by its `id` value
+
+// update a category by its `id` value
+router.put('/:id', async (req, res) => {
+  try {
+    const categoryData = await Category.update({
+      category_name: {
+        id: req.body.category_name,
+      }
+    },
+      {
+        where: {
+          id: req.params.id
+        }
+      });
+    if (!categoryData) {
+      res.status(404).json({ message: 'No user with this id!' });
+      return;
+    }
+    res.status(200).json(categoryData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
-router.delete('/:id', (req, res) => {
+
   // delete a category by its `id` value
-    try {
-    const userData = await User.destroy({
+router.delete('/:id', async (req, res) => {
+  try {
+    const categoryData = await Category.destroy({
       where: {
         id: req.params.id,
       },
     });
-    if (!userData) {
-      res.status(404).json({ message: 'No user with this id!' });
+    if (!categoryData) {
+      res.status(404).json({ message: 'No category with this id!' });
       return;
     }
-    res.status(200).json(userData);
+    res.status(200).json(categoryData);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -43,6 +93,7 @@ module.exports = router;
 
 
 // //TODO GET all users
+//*get
 // router.get('/', async (req, res) => {
 //   try {
 //     const userData = await User.findAll();
@@ -53,6 +104,7 @@ module.exports = router;
 // });
 
 // //TODO CREATE a new user
+//* post
 // router.post('/', async (req, res) => {
 //   try {
 //     const userData = await User.create({
@@ -67,6 +119,7 @@ module.exports = router;
 // });
 
 // //TODO GET one user
+//* get 
 // router.get('/:id', async (req, res) => {
 //   try {
 //     const userData = await User.findByPk(req.params.id);
@@ -81,6 +134,7 @@ module.exports = router;
 // });
 
 // //TODO UPDATE a user
+//* put
 // router.put('/:id', async (req, res) => {
 //   try {
 //     const userData = await User.update(req.body, {
@@ -99,6 +153,7 @@ module.exports = router;
 // });
 
 // //TODO DELETE a user
+//* delete
 // router.delete('/:id', async (req, res) => {
 //   try {
 //     const userData = await User.destroy({
