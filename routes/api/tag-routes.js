@@ -38,7 +38,7 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const tagsData = await Tag.create({
-      category_name: req.body.category_name,
+      tag_name: req.body.tag_name,
     });
     res.status(200).json(tagsData);
   } catch (err) {
@@ -51,16 +51,16 @@ router.post('/', async (req, res) => {
 // update a tag's name by its `id` value
 router.put('/:id', async (req, res) => {
   try {
-    const tagsData = await Tag.update({
-      tag_name: {
-        id: req.body.tag_name,
+    const tagsData = await Tag.update(req.body.id,{
+      // tag_name: {
+      //   id: req.body.tag_name,
+      // },
+
+      where: {
+        id: req.params.id
       }
-    },
-      {
-        where: {
-          id: req.params.id
-        }
-      });
+    }
+    );
     if (!tagsData) {
       res.status(404).json({ message: 'No tags with this id!' });
       return;
